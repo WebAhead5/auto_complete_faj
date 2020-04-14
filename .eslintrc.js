@@ -14,6 +14,6 @@ module.exports = {
         "ecmaVersion": 2018
     },
     "rules": {
-        "func-names": ["error", "always"] 
+      //  "func-names": ["error", "always"] 
     }
 };
