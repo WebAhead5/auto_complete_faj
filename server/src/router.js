@@ -3,7 +3,13 @@ const fs = require('fs');
 
 
 const router = function (req,res){
-    const filePath  = path.join(__dirname,"..","..","client","public", req.url === '/' ? '/index.html': req.url);
+    
+    
+    var filePath  = path.join(__dirname,"..","..","client","public", req.url === '/' ? '/index.html': req.url);
+    if(req.url.indexOf('server') != -1){
+        filePath  = path.join(__dirname,req.url.split('/')[3]);
+    }
+    console.log(filePath);
     const extname   = path.extname(filePath);
     let  contentType = 'text/html';
     switch (extname) {

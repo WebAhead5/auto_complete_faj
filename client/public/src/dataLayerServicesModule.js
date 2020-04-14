@@ -17,7 +17,7 @@ let serverReadyState = true; // Is server ready to make a call
 
 
 
-const getResults = (str, cb) => {
+const getData = (str, cb) => {
     // str = inputBar.value // only for testing
 
     ///VARIBLES
@@ -102,6 +102,6 @@ const getResults = (str, cb) => {
 // inputBar.addEventListener('input', () => getResults(str, cb)) // Event listener on type in input bar
 
 
-module.exports = {
-    getResults
-}
+// module.exports = {
+//     getResults
+// }
