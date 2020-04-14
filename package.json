@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./server/server.js"
+    "start": "nodemon ./server/server.js",
+    "test": "tape ./server/tests/router.js | tap-spec"
   },
   "keywords": [],
   "author": "",
@@ -15,9 +16,10 @@
     "supertest": "^4.0.2",
     "tap-spec": "^5.0.0",
     "tape": "^4.13.2"
-
   },
   "dependencies": {
-    "axios": "^0.19.2"
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0"
   }
 }

@@ -5,7 +5,7 @@ function GetInput()
     var InputEl=document.getElementById("Sbox")
     var InputVal=InputEl.value;
   //  console.log(InputVal);
-    serverServicesModule.getResults(InputVal,(error,result)=>{console.log("Amir " + result);});
+        giveResults(InputVal,(error,result)=>{console.log("Amir " + result);});
 }
 
 
