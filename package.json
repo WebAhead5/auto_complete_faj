@@ -15,5 +15,9 @@
     "supertest": "^4.0.2",
     "tap-spec": "^5.0.0",
     "tape": "^4.13.2"
+
+  },
+  "dependencies": {
+    "axios": "^0.19.2"
   }
 }
