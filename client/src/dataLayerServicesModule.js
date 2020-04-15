@@ -17,11 +17,8 @@ let serverReadyState = true; // Is server ready to make a call
 
 
 
-const getData = (str, cb) => {
+const getResults = (str, cb) => {
     // str = inputBar.value // only for testing
-
-    const apiID = "0bd79ebf"
-    var apiKey = "64b3123fa2579590735373178f879858";
 
     ///VARIBLES
 
@@ -34,20 +31,7 @@ const getData = (str, cb) => {
     ////PURE FUNCTIONS
 
     const apiCall = (str, url, cb) => {
-
-        const options = {
-            host: 'od-api.oxforddictionaries.com',
-            port: '443',
-            path: `api/v2/search/en-gb?q=${str}&prefix=true&limit=10`,
-            method: "GET",
-            headers: {
-                "Accept": "application/json",
-                'app_id': apiID,
-                'app_key': apiKey
-            }
-        };
-
-        fetch(url, options) //params to limit data received and or seach terms
+        fetch(url) //params to limit data received and or seach terms
             .then(response => response.json())
             .then(response => {
                 addToCache(str, response, cb);
@@ -67,10 +51,13 @@ const getData = (str, cb) => {
         //if (error) cb(error)
 
         let arr = []
+        let arr2 = []
         Object.keys(response).forEach(x => arr.push(response[x].meta.id))
-        console.log("cache2: ", lastInputs)
-        lastInputs[str] = arr
-        cb(null, arr);
+        lastInputs[str] = arr;
+        console.log("ARR,", arr)
+        console.log(Object.keys(response).forEach(x => arr2.push(response[x].meta.id.stems[0])))
+        console.log("cache: ", lastInputs)
+        cb(null, arr)
     }
 
     const pullFromCache = (str, cb) => {
@@ -89,25 +76,7 @@ const getData = (str, cb) => {
 
     ////API CALL LOGIC
 
-
-    // USE WITH AXIOS
-    // const apiCall = (str, url, cb) => {
-
-
-    //     axios.get(url, options) 
-    //         .then(response => {
-    //             addToCache(str, response, cb);
-    //         })
-    //         .catch(error => cb(error))
-    // }
-
-
-
-
-
-
-
-    // const apiKey = "9d4bc33c-11e5-46ad-be0f-64175e15545f"
+    const apiKey = "9d4bc33c-11e5-46ad-be0f-64175e15545f"
 
     try {
         if (str.length >= minLetters) {
@@ -116,8 +85,7 @@ const getData = (str, cb) => {
                 console.log(str.length, serverReadyState, "Cache Called")
             }
             else if (newRequest(str) && serverReadyState) {
-                // let url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${str}?key=${apiKey}`
-                const url = `https://od-api.oxforddictionaries.com/api/v2/search/en-gb?q=${str}&prefix=true&limit=10`
+                let url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${str}?key=${apiKey}`
                 timeoutReadyState()
                 apiCall(str, url, cb)
                 console.log(str.length, serverReadyState, "API called")
@@ -129,20 +97,15 @@ const getData = (str, cb) => {
     catch (error) {
         cb(error)
     }
+
 }
 
 
 
-// var str = inputBar.value
 
-
-
-
-const inputBar = document.getElementById("inputBar")
-
-inputBar.addEventListener('input', () => faridsfunction(sbar.value, cb))) // Event listener on type in input bar
+// inputBar.addEventListener('input', () => getResults(str, cb)) // Event listener on type in input bar
 
 
 module.exports = {
-    getData
+    getResults
 }
