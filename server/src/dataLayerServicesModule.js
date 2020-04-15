@@ -1,43 +1,59 @@
-const fetch = require("node-fetch");
-// const apiCall = require("./server)
+const axios = require("axios");
+const fs = require('fs')
+let x = 1; // 0 calls API, 1 calls local file
+let serverReadyState = true;
+let callInterval = 200;
+let minStr = 2
+let cache = {}
 
-// const inputBar = document.getElementById("inputBar")
-// var str = inputBar.value
+//GET DATA FUNCTION ####################################################
 
-
-// const cb = (error, response) => {
-//     if (error) console.log("Error:", error)
-//     else {
-//         console.log("Response:", response || "no data collected yet")
-//     }
-// }
+const getData = (str, cb) => {
 
 
-//Global
-let serverReadyState = true; // Is server ready to make a call
+    //PURE FUNCTIONS ###################################################
 
+    const readWordFile = (str, cb) => {
+        fs.readFile(__dirname + "/textFile1.json", (err, data) => {
+            if (err) console.log(err)
+            buildWordArr(str, JSON.parse(data), cb)
+        })
+    }
 
-
-const getData = function (str, cb) {
-    // str = inputBar.value // only for testing
-
-    ///VARIBLES
-
-    let callInterval = 1000 //(in MS) time between calls
-    let minLetters = 3; // num of letters when server call tirrgers
-    let lastInputs = {};
-    // let cacheSize = 4;
-
-
-    ////PURE FUNCTIONS
+    const buildWordArr = (str, data, cb) => {
+        try {
+            const regex = new RegExp(`^${str}`, 'gi');
+            let response = data.filter(word => {
+                return word.match(regex);
+            }).slice(0, 10);
+            if (response.length == 0) response = ['no results found']
+            addToCache(str, response)
+            cb(null, response)
+        }
+        catch (error) {
+            cb(error)
+        }
+    }
 
     const apiCall = (str, url, cb) => {
-        fetch(url) //params to limit data received and or seach terms
-            .then(response => response.json())
+        axios.get(url)
             .then(response => {
-                addToCache(str, response, cb);
+                let dataArr = []
+                console.log(response.data.records[1].fields.city)
+                response.data.records.forEach(item => dataArr.push(item.fields.city))
+                let arrJSON = JSON.stringify(dataArr)
+
+                fs.writeFile(__dirname + '/textFile1.json', arrJSON, (err) => {
+                    if (err) console.log(err)
+                    console.log("JSON FILE UPDATED FROM API", x)
+                    readWordFile(str, cb)
+                })
+                    .catch(error => { console.log("The errrrrrrror", error) })
             })
+<<<<<<< HEAD:server/src/dataLayerServicesModule.js
             .catch(error => {console.log("The errrrrrrror" + error)})
+=======
+>>>>>>> 75bcd834ed3f3d37cae19eaa73c2f28f97c30833:client/public/src/dataLayerServicesModule.js
     }
 
     const timeoutReadyState = () => {
@@ -48,62 +64,56 @@ const getData = function (str, cb) {
         }, callInterval)
     }
 
-    const addToCache = (str, response, cb) => {
+    const addToCache = (str, response) => {
         //if (error) cb(error)
-        lastInputs[str] = response
         let arr = []
-        console.log(Object.keys(response).forEach(x => arr.push(response[x].meta.id)))
-        console.log("cache: ", lastInputs)
-        cb(null, arr)
+        response.forEach(x => arr.push(x))
+        cache[str] = arr;
+        console.log("cache add: ", cache, "end of cache")
     }
 
     const pullFromCache = (str, cb) => {
         //if (error) cb(error)
-        console.log("cache: ", lastInputs)
-        cb(null, lastInputs[str])
+        console.log("cache pull: ", cache, "end of cache")
+        cb(null, cache[str])
     }
 
     const newRequest = (str) => {
-        if (Object.keys(lastInputs).some(x => x == str)) {
+        if (Object.keys(cache).some(x => x == str)) {
             console.log("This has been enetered before")
             return false
         }
         return true
     }
 
-    ////API CALL LOGIC
-
-    const apiKey = "9d4bc33c-11e5-46ad-be0f-64175e15545f"
+    // DATA HANDLER ################################################
 
     try {
-        if (str.length >= minLetters) {
-            if (!newRequest(str)) {
-                pullFromCache(str, cb)
-                console.log(str.length, serverReadyState, "Cache Called")
-            }
-            else if (newRequest(str) && serverReadyState) {
-                let url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${str}?key=${apiKey}`
-                timeoutReadyState()
-                apiCall(str, url, cb)
-                console.log(str.length, serverReadyState, "API called")
+        if (str.length >= minStr) {
+            if (newRequest(str)) {
+                if (serverReadyState == true) {
+                    timeoutReadyState();
+                    //temp load once
+                    if (x < 1) {
+                        // const url = "https://restcountries.eu/rest/v2/"
+                        const url = "https://public.opendatasoft.com/api/records/1.0/search/?dataset=worldcitiespop&rows=10000&facet=country&refine.country=il"
+                        x = x + 1
+                        apiCall(str, url, cb)
+                    } else {
+                        readWordFile(str, cb)
+                    }
+                } else new TypeError("server timed out")
             } else {
-                console.log(str.length, serverReadyState, "API call on Timeout")
+                pullFromCache(str, cb)
             }
-        } else console.log(str.length, serverReadyState, "String Not Long Enough")
+        } else new TypeError("string not long enough")
     }
     catch (error) {
-        cb(error)
+        console.log("Error:", error)
     }
 
 }
 
-
-
-
-// inputBar.addEventListener('input', () => getResults(str, cb)) // Event listener on type in input bar
-
-
-module.exports =  {
-    getData : getData
+module.exports = {
+    getData: getData
 };
-
