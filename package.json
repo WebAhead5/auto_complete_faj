@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "start": "node server/server.js",
     "n": "nodemon ./server/server.js",
     "test": "tape ./server/tests/router.js | tap-spec",
