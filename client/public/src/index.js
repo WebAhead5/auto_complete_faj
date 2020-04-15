@@ -1,5 +1,14 @@
 /* eslint-disable no-unused-vars */
 
+function myFunction(){
+    var InputEl=document.getElementById("Sbox")
+    
+    if(InputEl){
+        var inputval=InputEl.value;
+        console.log(inputval);
+        giveResults(inputval);
+    }
+} 
 function GetInput()
 {
 
