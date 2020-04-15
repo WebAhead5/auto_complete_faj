@@ -22,6 +22,8 @@ const giveResults = function(str){
                  document.getElementById('Sbox').value=b.innerText;
                  var  frame=document.getElementById('frame1')
                  frame.src="https://www.wikipedia.org/wiki/"+b.innerText;
+                 closeAllLists();
+
                  console.log('aaa')
 
 
