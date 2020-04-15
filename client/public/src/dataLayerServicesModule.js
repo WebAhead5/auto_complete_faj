@@ -1,3 +1,4 @@
+const fetch = require("node-fetch");
 // const apiCall = require("./server)
 
 // const inputBar = document.getElementById("inputBar")
@@ -17,7 +18,7 @@ let serverReadyState = true; // Is server ready to make a call
 
 
 
-const getData = (str, cb) => {
+const getData = function (str, cb) {
     // str = inputBar.value // only for testing
 
     const apiID = "0bd79ebf"
@@ -52,7 +53,7 @@ const getData = (str, cb) => {
             .then(response => {
                 addToCache(str, response, cb);
             })
-            .catch(error => cb(error))
+            .catch(error => { console.log("The errrrrrrror", error) })
     }
 
     const timeoutReadyState = () => {
@@ -138,11 +139,7 @@ const getData = (str, cb) => {
 
 
 
-const inputBar = document.getElementById("inputBar")
-
-inputBar.addEventListener('input', () => faridsfunction(sbar.value, cb))) // Event listener on type in input bar
-
-
 module.exports = {
-    getData
-}
+    getData: getData
+};
+
