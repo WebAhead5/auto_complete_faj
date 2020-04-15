@@ -23,7 +23,7 @@ const getData = function (str, cb) {
 
     ///VARIBLES
 
-    let callInterval = 1000 //(in MS) time between calls
+    let callInterval = 0 //(in MS) time between calls
     let minLetters = 3; // num of letters when server call tirrgers
     let lastInputs = {};
     // let cacheSize = 4;
