@@ -5,6 +5,7 @@ let serverReadyState = true;
 let callInterval = 200;
 let minStr = 2
 let cache = {}
+const filePath = __dirname + "/../textFile1.json";
 
 //GET DATA FUNCTION ####################################################
 
@@ -14,7 +15,8 @@ const getData = (str, cb) => {
     //PURE FUNCTIONS ###################################################
 
     const readWordFile = (str, cb) => {
-        fs.readFile(__dirname + "/textFile1.json", (err, data) => {
+        
+        fs.readFile(filePath, (err, data) => {
             if (err) console.log(err)
             buildWordArr(str, JSON.parse(data), cb)
         })
@@ -43,17 +45,17 @@ const getData = (str, cb) => {
                 response.data.records.forEach(item => dataArr.push(item.fields.city))
                 let arrJSON = JSON.stringify(dataArr)
 
-                fs.writeFile(__dirname + '/textFile1.json', arrJSON, (err) => {
+                fs.writeFile(filePath, arrJSON, (err) => {
                     if (err) console.log(err)
                     console.log("JSON FILE UPDATED FROM API", x)
                     readWordFile(str, cb)
                 })
                     .catch(error => { console.log("The errrrrrrror", error) })
             })
-<<<<<<< HEAD:server/src/dataLayerServicesModule.js
+
             .catch(error => {console.log("The errrrrrrror" + error)})
-=======
->>>>>>> 75bcd834ed3f3d37cae19eaa73c2f28f97c30833:client/public/src/dataLayerServicesModule.js
+
+
     }
 
     const timeoutReadyState = () => {
