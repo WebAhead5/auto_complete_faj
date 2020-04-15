@@ -1,0 +1,29 @@
+
+.Intro{
+text-align: center;
+}
+
+.searchbox{
+
+
+}
+
+.autocomplete-items {
+    text-align: center;
+
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: no}
+    .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff; 
+        border-bottom: 1px solid #d4d4d4; 
+      }
+      
+      /*when hovering an item:*/
+      .autocomplete-items div:hover {
+        background-color: #e9e9e9; 
+      }
+      
