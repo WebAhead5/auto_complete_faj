@@ -9,10 +9,13 @@ const filePath = __dirname + "/../textFile1.json";
 
 //GET DATA FUNCTION ####################################################
 
-const getData = (str, cb) => {
-
 
     //PURE FUNCTIONS ###################################################
+
+const getData = function (str, cb) {
+
+
+    ///VARIBLES
 
     const readWordFile = (str, cb) => {
         
@@ -20,7 +23,8 @@ const getData = (str, cb) => {
             if (err) console.log(err)
             buildWordArr(str, JSON.parse(data), cb)
         })
-    }
+
+}
 
     const buildWordArr = (str, data, cb) => {
         try {

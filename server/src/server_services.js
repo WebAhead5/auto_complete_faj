@@ -1,5 +1,5 @@
 const dataLayerServicesModule = require('./dataLayerServicesModule');
-const MIN_STR_LENGTH = 3;
+const MIN_STR_LENGTH = 1;
 
 const serverServicesModule = {
     getResults : function (str,cb){

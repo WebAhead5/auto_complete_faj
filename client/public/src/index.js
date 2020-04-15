@@ -1,14 +1,24 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 
-function myFunction(){
-    var InputEl=document.getElementById("Sbox")
-    
-    if(InputEl){
-        var inputval=InputEl.value;
-        console.log(inputval);
+function myFunction() {
+    var InputEl = document.getElementById("Sbox")
+    var inputval = InputEl.value;
+        
+    if (inputval.length <= 3) {
+        var x = document.getElementsByClassName("autocomplete-items");
+        for (var i = 0; i < x.length; i++)
+            x[i].parentNode.removeChild(x[i]);
+
+    } else {
         giveResults(inputval);
     }
-} 
+}
+        //console.log( arr);
+
+
+
+/*
 function GetInput()
 {
 
@@ -27,3 +37,4 @@ return {'1':'2',
 '3':'3'
 }}
 
+*/
