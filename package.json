@@ -6,14 +6,18 @@
   "scripts": {
     "start": "node server/server.js",
     "n": "nodemon ./server/server.js",
-    "test": "tape ./server/tests/router.js | tap-spec"
+    "test": "tape ./server/tests/router.js | tap-spec",
+    "nyc" : "nyc npm test",
+    "coverage" : "nyc --reporter=lcov --reporter=text-summary npm test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "codecov": "^3.6.5",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.19.0",
+    "nyc": "^15.0.1",
     "supertest": "^4.0.2",
     "tap-spec": "^5.0.0",
     "tape": "^4.13.2"
