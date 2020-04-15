@@ -5,7 +5,7 @@ function myFunction() {
     var InputEl = document.getElementById("Sbox")
     var inputval = InputEl.value;
         
-    if (inputval.length <= 3) {
+    if (inputval.length <= 1) {
         var x = document.getElementsByClassName("autocomplete-items");
         for (var i = 0; i < x.length; i++)
             x[i].parentNode.removeChild(x[i]);
