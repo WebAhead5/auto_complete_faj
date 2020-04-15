@@ -6,7 +6,7 @@ function GetInput()
     var InputEl=document.getElementById("Sbox")
     var InputVal=InputEl.value;
         // eslint-disable-next-line no-undef
-        giveResults(InputVal,(error,result)=>{console.log("Amir " + result);});
+        giveResults(InputVal);
 }
 
 
