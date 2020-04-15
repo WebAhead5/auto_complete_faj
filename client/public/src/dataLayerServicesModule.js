@@ -26,7 +26,7 @@ const getData = (str, cb) => {
             let response = data.filter(word => {
                 return word.match(regex);
             }).slice(0, 10);
-
+            if (response.length == 0) response = ['no results found']
             addToCache(str, response)
             cb(null, response)
         }
@@ -39,7 +39,8 @@ const getData = (str, cb) => {
         axios.get(url)
             .then(response => {
                 let dataArr = []
-                response.data.forEach(item => dataArr.push(item.name))
+                console.log(response.data.records[1].fields.city)
+                response.data.records.forEach(item => dataArr.push(item.fields.city))
                 let arrJSON = JSON.stringify(dataArr)
 
                 fs.writeFile(__dirname + '/textFile1.json', arrJSON, (err) => {
@@ -90,17 +91,18 @@ const getData = (str, cb) => {
                     timeoutReadyState();
                     //temp load once
                     if (x < 1) {
-                        const url = "https://restcountries.eu/rest/v2/"
+                        // const url = "https://restcountries.eu/rest/v2/"
+                        const url = "https://public.opendatasoft.com/api/records/1.0/search/?dataset=worldcitiespop&rows=10000&facet=country&refine.country=il"
                         x = x + 1
                         apiCall(str, url, cb)
                     } else {
                         readWordFile(str, cb)
                     }
-                } else new Error("server timed out")
+                } else new TypeError("server timed out")
             } else {
                 pullFromCache(str, cb)
             }
-        } else new Error("string not long enough")
+        } else new TypeError("string not long enough")
     }
     catch (error) {
         console.log("Error:", error)
