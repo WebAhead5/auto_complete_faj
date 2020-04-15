@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 
 function GetInput()
 {
 
     var InputEl=document.getElementById("Sbox")
     var InputVal=InputEl.value;
-  //  console.log(InputVal);
+        // eslint-disable-next-line no-undef
         giveResults(InputVal,(error,result)=>{console.log("Amir " + result);});
 }
 

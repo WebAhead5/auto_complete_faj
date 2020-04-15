@@ -1,4 +1,4 @@
-const dataLayerServicesModule = require('../../client/public/src/dataLayerServicesModule');
+const dataLayerServicesModule = require('./dataLayerServicesModule');
 const MIN_STR_LENGTH = 3;
 
 const serverServicesModule = {

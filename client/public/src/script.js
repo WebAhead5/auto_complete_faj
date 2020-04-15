@@ -6,25 +6,8 @@ const giveResults = function(str,cb){
     xhr.onreadystatechange = function() {
       if(xhr.readyState === 4){
         if (xhr.status === 200){
-           var data = xhr.responseText;//JSON.parse(xhr.responseText);
+           var data = xhr.responseText;
            console.log(data);
-          // var keys = Object.keys(data);
-          // let i =0;
-          // for (var blogPost in data) {
-          //   var postDiv         = document.createElement('div');
-          //   var postText        = document.createElement('p');
-          //   var thumbnail       = document.createElement('img');
-          //   var postContainer   = document.getElementsByClassName('post-container')[0];
-
-          //   thumbnail.src = "./img/logo2.png";
-          //   thumbnail.className = "thumbnail";
-          //   postText.innerHTML = keys[i++] + "<br><br> "+ data[blogPost];
-          //   postDiv.className = "post";
-
-          //   postDiv.appendChild(thumbnail);
-          //   postDiv.appendChild(postText);
-          //   postContainer.appendChild(postDiv);
-          // }
         }
         else {
           console.error(xhr.responseText);

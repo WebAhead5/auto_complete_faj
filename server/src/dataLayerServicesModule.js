@@ -37,7 +37,7 @@ const getData = function (str, cb) {
             .then(response => {
                 addToCache(str, response, cb);
             })
-            .catch(error => {console.log("The errrrrrrror")})
+            .catch(error => {console.log("The errrrrrrror" + error)})
     }
 
     const timeoutReadyState = () => {
