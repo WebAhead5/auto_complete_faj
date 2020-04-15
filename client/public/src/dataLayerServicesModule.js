@@ -1,48 +1,20 @@
 const axios = require("axios");
 const fs = require('fs')
-let x = 1;
+let x = 1; // 0 calls API, 1 calls local file
 let serverReadyState = true;
 let callInterval = 200;
-let minStr = 3
+let minStr = 2
 let cache = {}
 
 //GET DATA FUNCTION ####################################################
 
 const getData = (str, cb) => {
-    try {
-        if (str.length >= minStr) {
-            if (newRequest(str)) {
-                if (serverReadyState == true) {
-                    timeoutReadyState();
-                    //temp load once
-                    if (x < 1) {
-                        const url = "apiurl";
-                        x++
 
-                        let updatedData = apiCall(url)
-                        let dataArr = updatedData.forEach(result => dataArr.push(updatedData[result].name))
-                        let arrJSON = JSON.stringify(dataArr)
 
-                        fs.writeFile(__dirname + '/textFile.json', arrJSON, (err) => {
-                            if (err) console.log(err)
-                            readWordFile(str, cb)
-                        })
-                    } else {
-                        readWordFile(str, cb)
-                    }
-                } else new Error("server timed out")
-            } else {
-                pullFromCache(str, cb)
-            }
-        } else new Error("string not long enough")
-    }
-    catch (error) {
-        console.log("Error:", error)
-    }
-
+    //PURE FUNCTIONS ###################################################
 
     const readWordFile = (str, cb) => {
-        fs.readFile(__dirname + "/textFile.json", (err, data) => {
+        fs.readFile(__dirname + "/textFile1.json", (err, data) => {
             if (err) console.log(err)
             buildWordArr(str, JSON.parse(data), cb)
         })
@@ -51,7 +23,7 @@ const getData = (str, cb) => {
     const buildWordArr = (str, data, cb) => {
         try {
             const regex = new RegExp(`^${str}`, 'gi');
-            let response = Object.keys(data).filter(word => {
+            let response = data.filter(word => {
                 return word.match(regex);
             }).slice(0, 10);
 
@@ -63,10 +35,20 @@ const getData = (str, cb) => {
         }
     }
 
-    const apiCall = (url) => {
+    const apiCall = (str, url, cb) => {
         axios.get(url)
-            .then(response => { return response })
-            .catch(error => { console.log("The errrrrrrror", error) })
+            .then(response => {
+                let dataArr = []
+                response.data.forEach(item => dataArr.push(item.name))
+                let arrJSON = JSON.stringify(dataArr)
+
+                fs.writeFile(__dirname + '/textFile1.json', arrJSON, (err) => {
+                    if (err) console.log(err)
+                    console.log("JSON FILE UPDATED FROM API", x)
+                    readWordFile(str, cb)
+                })
+                    .catch(error => { console.log("The errrrrrrror", error) })
+            })
     }
 
     const timeoutReadyState = () => {
@@ -97,6 +79,31 @@ const getData = (str, cb) => {
             return false
         }
         return true
+    }
+
+    // DATA HANDLER ################################################
+
+    try {
+        if (str.length >= minStr) {
+            if (newRequest(str)) {
+                if (serverReadyState == true) {
+                    timeoutReadyState();
+                    //temp load once
+                    if (x < 1) {
+                        const url = "https://restcountries.eu/rest/v2/"
+                        x = x + 1
+                        apiCall(str, url, cb)
+                    } else {
+                        readWordFile(str, cb)
+                    }
+                } else new Error("server timed out")
+            } else {
+                pullFromCache(str, cb)
+            }
+        } else new Error("string not long enough")
+    }
+    catch (error) {
+        console.log("Error:", error)
     }
 
 }
