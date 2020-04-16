@@ -68,7 +68,6 @@ const getData = (str, cb) => {
         serverReadyState = false
         setTimeout(() => {
             serverReadyState = true
-            console.log("TIMER SETS READY STATE TO:", serverReadyState)
         }, callInterval)
     }
 
@@ -78,7 +77,6 @@ const getData = (str, cb) => {
     //Check if request is in cache
     const newRequest = (str) => {
         if (Object.keys(cache).some(x => x == str)) {
-            console.log("This has been enetered before")
             return false
         }
         return true
@@ -89,12 +87,10 @@ const getData = (str, cb) => {
         let arr = []
         response.forEach(x => arr.push(x))
         cache[str] = arr;
-        console.log("cache add: ", cache, "end of cache")
     }
 
     const pullFromCache = (str, cb) => {
         //if (error) cb(error)
-        console.log("cache pull: ", cache, "end of cache")
         cb(null, cache[str])
     }
 
