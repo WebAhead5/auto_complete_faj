@@ -52,7 +52,6 @@ const getData = (str, cb) => {
         axios.get(url)
             .then(response => {
                 let dataArr = []
-                console.log(response.data.records[1].fields.city)
                 response.data.records.forEach(item => dataArr.push(item.fields.city))
                 let arrJSON = JSON.stringify(dataArr)
 
@@ -60,7 +59,7 @@ const getData = (str, cb) => {
                     if (err) console.log(err)
                     console.log("JSON FILE UPDATED FROM API")
                 })
-                    .catch(error => { console.log("The errrrrrrror", error) })
+                    .catch(error => { console.log("API LOAD ERROR:", error) })
             })
     }
 
