@@ -1,10 +1,12 @@
 const axios = require("axios");
 const fs = require('fs')
-let x = 1; // 0 calls API, 1 calls local file
+const schedule = require('node-schedule')
 let serverReadyState = true;
-let callInterval = 200;
+let callInterval = 100;
 let minStr = 2
 let cache = {}
+
+
 
 //GET DATA FUNCTION ####################################################
 
@@ -12,6 +14,19 @@ const getData = (str, cb) => {
 
 
     //PURE FUNCTIONS ###################################################
+
+
+
+    //Schedule API call every midnight
+
+    schedule.scheduleJob('00***', () => {
+
+        const url = "https://public.opendatasoft.com/api/records/1.0/search/?dataset=worldcitiespop&rows=10000&facet=country&refine.country=il"
+
+        apiCall(url)
+    })
+
+
 
     const readWordFile = (str, cb) => {
         fs.readFile(__dirname + "/textFile1.json", (err, data) => {
@@ -35,7 +50,7 @@ const getData = (str, cb) => {
         }
     }
 
-    const apiCall = (str, url, cb) => {
+    const apiCall = (url) => {
         axios.get(url)
             .then(response => {
                 let dataArr = []
@@ -45,8 +60,7 @@ const getData = (str, cb) => {
 
                 fs.writeFile(__dirname + '/textFile1.json', arrJSON, (err) => {
                     if (err) console.log(err)
-                    console.log("JSON FILE UPDATED FROM API", x)
-                    readWordFile(str, cb)
+                    console.log("JSON FILE UPDATED FROM API")
                 })
                     .catch(error => { console.log("The errrrrrrror", error) })
             })
@@ -89,15 +103,7 @@ const getData = (str, cb) => {
             if (newRequest(str)) {
                 if (serverReadyState == true) {
                     timeoutReadyState();
-                    //temp load once
-                    if (x < 1) {
-                        // const url = "https://restcountries.eu/rest/v2/"
-                        const url = "https://public.opendatasoft.com/api/records/1.0/search/?dataset=worldcitiespop&rows=10000&facet=country&refine.country=il"
-                        x = x + 1
-                        apiCall(str, url, cb)
-                    } else {
-                        readWordFile(str, cb)
-                    }
+                    readWordFile(str, cb)
                 } else new TypeError("server timed out")
             } else {
                 pullFromCache(str, cb)
