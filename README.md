@@ -24,7 +24,7 @@ If the user picked a city from the option, an informatonal ifram will open to to
  
  ## We used travis for CI
 
- ![](https://github.com/WebAhead5/auto_complete_faj/blob//bug_fixes_farid/Design/heigh_level_design.png) 
+ ![](https://github.com/WebAhead5/auto_complete_faj/blob/bug_fixes_farid/Design/travis_report_example.png) 
 
 ---
 https://cities-in-wikipedia.herokuapp.com/
