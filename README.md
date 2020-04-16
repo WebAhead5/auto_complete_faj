@@ -14,13 +14,13 @@ Which is an api specific for  information about cities acording to country,
 The app showes to the user all the cities in Israel while he/she is tyeping the name of he city.
 If the user picked a city from the option, an informatonal ifram will open to to display the information about this city as it is in WikipediA today
 
-![](https://github.com/WebAhead5/auto_complete_faj/blob/faridsBranch/Design/cities_in_wikipedia.png )
+![](https://github.com/WebAhead5/auto_complete_faj/blob/bug_fixes_farid/Design/cities_in_wikipedia.png )
 
 
 
 ## Heigh Level Design
 
- ![](https://github.com/WebAhead5/auto_complete_faj/blob/bug_fixes_farid/Design/heigh_level_design.png) 
+ ![](https://github.com/WebAhead5/auto_complete_faj/blob//bug_fixes_farid/Design/heigh_level_design.png) 
 
 ---
 https://cities-in-wikipedia.herokuapp.com/
