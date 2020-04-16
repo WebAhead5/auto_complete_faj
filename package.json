@@ -8,7 +8,8 @@
     "start": "node server/server.js",
     "stop": "pkill --signal SIGINT app",
     "n": "nodemon ./server/server.js",
-    "test": "tape ./server/tests/app.js | tap-spec",
+    "server_test": "tape ./server/tests/app.js | tap-spec",
+    "test": "tape ./server/tests/*.js | tap-spec",
     "dataTest": "tape ./server/tests/dataLayerServicesModule.js | tap-spec",
     "nyc": "nyc npm test",
     "coverage": "nyc --reporter=lcov --reporter=text-summary npm test"
