@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 const test = require("tape");
 const supertest = require("supertest");
-const router = require("../src/router");
 const app = require("../app");
 
 test("route to index.html", t => {
@@ -31,6 +30,17 @@ test("route to index.html", t => {
       .get("/index.css")
       .expect(200)
       .expect("content-type", "text/css; charset=UTF-8")
+      .end((err, res) => {
+        t.error(err);
+        t.end();
+      });
+  });
+
+  test("route to specific word", t => {
+    supertest(app)
+      .get("/posts/?string=haifa")
+      .expect(200)
+      .expect("content-type", "application/json")
       .end((err, res) => {
         t.error(err);
         t.end();
