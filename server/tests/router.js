@@ -2,7 +2,7 @@
 const test = require("tape");
 const supertest = require("supertest");
 const router = require("../src/router");
-const app = require("../server");
+const app = require("../app");
 
 test("route to index.html", t => {
     supertest(app)

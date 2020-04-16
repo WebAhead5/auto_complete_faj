@@ -6,7 +6,7 @@
   "scripts": {
     "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "start": "node server/server.js",
-    "stop": "pkill --signal SIGINT myApp",
+    "stop": "pkill --signal SIGINT app",
     "n": "nodemon ./server/server.js",
     "test": "tape ./server/tests/router.js | tap-spec",
     "nyc": "nyc npm test",

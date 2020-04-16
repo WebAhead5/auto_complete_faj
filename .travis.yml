@@ -8,5 +8,4 @@ node_js:
 
 script:
  - npm test
- - npm stop
  - codecov
