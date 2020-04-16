@@ -21,7 +21,7 @@ app.get("/posts",(req,response) =>{
 app.use(express.static('client/public'));
 
 
-process.title = myApp;
+process.title = app;
 app.listen(PORT,()=>
     console.log(`Server is running at Port ${PORT}, and waiting for requests`));
 
