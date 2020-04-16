@@ -9,6 +9,7 @@
     "stop": "pkill --signal SIGINT app",
     "n": "nodemon ./server/server.js",
     "test": "tape ./server/tests/app.js | tap-spec",
+    "dataTest": "tape ./server/tests/dataLayerServicesModule.js | tap-spec",
     "nyc": "nyc npm test",
     "coverage": "nyc --reporter=lcov --reporter=text-summary npm test"
   },
