@@ -2,7 +2,7 @@ const axios = require("axios");
 const fs = require('fs')
 const schedule = require('node-schedule')
 let serverReadyState = true;
-let callInterval = 100;
+let callInterval = 0;
 let minStr = 2
 let cache = {}
 
