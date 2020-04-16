@@ -20,7 +20,7 @@ If the user picked a city from the option, an informatonal ifram will open to to
 
 ## Heigh Level Design
 
- ![](https://github.com/WebAhead5/auto_complete_faj/blob/faridsBranch/Design/heigh_level_design.png) 
+ ![](https://github.com/WebAhead5/auto_complete_faj/blob/bug_fixes_farid/Design/heigh_level_design.png) 
 
 ---
 https://cities-in-wikipedia.herokuapp.com/
