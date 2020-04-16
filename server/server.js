@@ -20,8 +20,8 @@ app.get("/posts",(req,response) =>{
 
 app.use(express.static('client/public'));
 
+module.exports = app;
 
 app.listen(PORT,()=>
     console.log(`Server is running at Port ${PORT}, and waiting for requests`));
 
-module.exports = app;
