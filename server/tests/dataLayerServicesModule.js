@@ -73,58 +73,58 @@ test('Test that entries in UPPERCASE still returns rxpected results', function (
 });
 
 
-test('Test that "naza" returns 3 results', function (t) {
-    dataFunctions.getData("naza", (err, res) => {
-        if (err) return err
-        else {
-            var actual = res.length
-            var expected = 3;
-            t.deepEqual(actual, expected, "should return Haifa")
-            t.end();
-        }
-    })
+// test('Test that "naza" returns 3 results', function (t) {
+//     dataFunctions.getData("naza", (err, res) => {
+//         if (err) return err
+//         else {
+//             var actual = res.length
+//             var expected = 3;
+//             t.deepEqual(actual, expected, "should return Haifa")
+//             t.end();
+//         }
+//     })
 
-});
-
-
-test('Test that "h" triggers error', function (t) {
-    dataFunctions.getData("hai", (err, res) => {
-        if (err) {
-            var expected = "string not long enough"
-            t.deepEqual(err.message, expected, "should return error")
-            t.end();
-        }
-        else {
-            return res
-        }
-    })
-});
+// });
 
 
-test('Check max length of response is no more than 10', function (t) {
-    dataFunctions.getData("te", (err, res) => {
-        if (err) return err
-        else {
-            var actual = res.length
-            var expected = 10
-            t.equal(actual, expected, "max length of results should be 10")
-            t.end();
-        }
-    })
-});
+// test('Test that "h" triggers error', function (t) {
+//     dataFunctions.getData("hai", (err, res) => {
+//         if (err) {
+//             var expected = "string not long enough"
+//             t.deepEqual(err.message, expected, "should return error")
+//             t.end();
+//         }
+//         else {
+//             return res
+//         }
+//     })
+// });
 
 
-test('When no results are found, returns message', function (t) {
-    dataFunctions.getData("bhfwvmw", (err, res) => {
-        if (err) return err
-        else {
-            var expected = ['no results found']
-            t.deepEqual(res, expected, "testing no results msg should be returned")
-            t.end();
-        }
-    })
+// test('Check max length of response is no more than 10', function (t) {
+//     dataFunctions.getData("te", (err, res) => {
+//         if (err) return err
+//         else {
+//             var actual = res.length
+//             var expected = 10
+//             t.equal(actual, expected, "max length of results should be 10")
+//             t.end();
+//         }
+//     })
+// });
 
-});
+
+// test('When no results are found, returns message', function (t) {
+//     dataFunctions.getData("bhfwvmw", (err, res) => {
+//         if (err) return err
+//         else {
+//             var expected = ['no results found']
+//             t.deepEqual(res, expected, "testing no results msg should be returned")
+//             t.end();
+//         }
+//     })
+
+// });
 
 
 // test('Test that cache is collecting information', function (t) {
