@@ -1,30 +1,37 @@
 const axios = require("axios");
 const fs = require('fs')
-let x = 1; // 0 calls API, 1 calls local file
+const schedule = require('node-schedule')
 let serverReadyState = true;
-let callInterval = 200;
+let callInterval = 100;
 let minStr = 2
 let cache = {}
-const filePath = __dirname + "/../textFile1.json";
+
+
 
 //GET DATA FUNCTION ####################################################
+
+const getData = (str, cb) => {
+
+
+    //Schedule API call every midnight
+
+    schedule.scheduleJob('00***', () => {
+
+        const url = "https://public.opendatasoft.com/api/records/1.0/search/?dataset=worldcitiespop&rows=10000&facet=country&refine.country=il"
+
+        apiCall(url)
+    })
 
 
     //PURE FUNCTIONS ###################################################
 
-const getData = function (str, cb) {
-
-
-    ///VARIBLES
 
     const readWordFile = (str, cb) => {
-        
-        fs.readFile(filePath, (err, data) => {
+        fs.readFile(__dirname + "/../cityList.json", (err, data) => {
             if (err) console.log(err)
             buildWordArr(str, JSON.parse(data), cb)
         })
-
-}
+    }
 
     const buildWordArr = (str, data, cb) => {
         try {
@@ -41,7 +48,7 @@ const getData = function (str, cb) {
         }
     }
 
-    const apiCall = (str, url, cb) => {
+    const apiCall = (url) => {
         axios.get(url)
             .then(response => {
                 let dataArr = []
@@ -49,17 +56,12 @@ const getData = function (str, cb) {
                 response.data.records.forEach(item => dataArr.push(item.fields.city))
                 let arrJSON = JSON.stringify(dataArr)
 
-                fs.writeFile(filePath, arrJSON, (err) => {
+                fs.writeFile(__dirname + '/../cityList.json', arrJSON, (err) => {
                     if (err) console.log(err)
-                    console.log("JSON FILE UPDATED FROM API", x)
-                    readWordFile(str, cb)
+                    console.log("JSON FILE UPDATED FROM API")
                 })
                     .catch(error => { console.log("The errrrrrrror", error) })
             })
-
-            .catch(error => {console.log("The errrrrrrror" + error)})
-
-
     }
 
     const timeoutReadyState = () => {
@@ -99,15 +101,7 @@ const getData = function (str, cb) {
             if (newRequest(str)) {
                 if (serverReadyState == true) {
                     timeoutReadyState();
-                    //temp load once
-                    if (x < 1) {
-                        // const url = "https://restcountries.eu/rest/v2/"
-                        const url = "https://public.opendatasoft.com/api/records/1.0/search/?dataset=worldcitiespop&rows=10000&facet=country&refine.country=il"
-                        x = x + 1
-                        apiCall(str, url, cb)
-                    } else {
-                        readWordFile(str, cb)
-                    }
+                    readWordFile(str, cb)
                 } else new TypeError("server timed out")
             } else {
                 pullFromCache(str, cb)

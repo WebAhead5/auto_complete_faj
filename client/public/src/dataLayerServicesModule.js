@@ -13,10 +13,6 @@ let cache = {}
 const getData = (str, cb) => {
 
 
-    //PURE FUNCTIONS ###################################################
-
-
-
     //Schedule API call every midnight
 
     schedule.scheduleJob('00***', () => {
@@ -27,9 +23,11 @@ const getData = (str, cb) => {
     })
 
 
+    //PURE FUNCTIONS ###################################################
+
 
     const readWordFile = (str, cb) => {
-        fs.readFile(__dirname + "/textFile1.json", (err, data) => {
+        fs.readFile(__dirname + "/cityList.json", (err, data) => {
             if (err) console.log(err)
             buildWordArr(str, JSON.parse(data), cb)
         })
@@ -58,7 +56,7 @@ const getData = (str, cb) => {
                 response.data.records.forEach(item => dataArr.push(item.fields.city))
                 let arrJSON = JSON.stringify(dataArr)
 
-                fs.writeFile(__dirname + '/textFile1.json', arrJSON, (err) => {
+                fs.writeFile(__dirname + '/cityList.json', arrJSON, (err) => {
                     if (err) console.log(err)
                     console.log("JSON FILE UPDATED FROM API")
                 })
