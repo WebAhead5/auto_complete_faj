@@ -15,7 +15,7 @@ test("route to index.html", t => {
       });
   });
 
-  test("route to index.js", t => {
+  test("route to js files in src", t => {
     supertest(app)
       .get("/src/index.js")
       .expect(200)
@@ -25,3 +25,15 @@ test("route to index.html", t => {
         t.end();
       });
   });
+
+  test("route to css files in bublic", t => {
+    supertest(app)
+      .get("/index.css")
+      .expect(200)
+      .expect("content-type", "text/css; charset=UTF-8")
+      .end((err, res) => {
+        t.error(err);
+        t.end();
+      });
+  });
+
