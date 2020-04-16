@@ -15,7 +15,8 @@ const giveResults = function (str) {
         data.forEach((value) => {
           var b;
           b = document.createElement("DIV");
-          b.innerHTML = "<strong>" + value.substr(0, value.length) + "</strong>";
+          b.innerHTML = "<strong>" + value.substr(0, str.length) + "</strong>";
+          b.innerHTML += value.substr(str.length)
           b.addEventListener("click", function (e) {
             closeAllLists();
 
