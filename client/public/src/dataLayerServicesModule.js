@@ -27,7 +27,7 @@ const getData = (str, cb) => {
 
 
     const readWordFile = (str, cb) => {
-        fs.readFile(__dirname + "/../cityList.json", (err, data) => {
+        fs.readFile(__dirname + "/cityList.json", (err, data) => {
             if (err) console.log(err)
             buildWordArr(str, JSON.parse(data), cb)
         })
@@ -52,14 +52,15 @@ const getData = (str, cb) => {
         axios.get(url)
             .then(response => {
                 let dataArr = []
+                console.log(response.data.records[1].fields.city)
                 response.data.records.forEach(item => dataArr.push(item.fields.city))
                 let arrJSON = JSON.stringify(dataArr)
 
-                fs.writeFile(__dirname + '/../cityList.json', arrJSON, (err) => {
+                fs.writeFile(__dirname + '/cityList.json', arrJSON, (err) => {
                     if (err) console.log(err)
                     console.log("JSON FILE UPDATED FROM API")
                 })
-                    .catch(error => { console.log("API LOAD ERROR:", error) })
+                    .catch(error => { console.log("The errrrrrrror", error) })
             })
     }
 
